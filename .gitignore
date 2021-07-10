@@ -1,6 +1,6 @@
 *.pyc
 .coverage
-example/credentials.json
+credentials.json
 
 *.egg-info/
 dist/
