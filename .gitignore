@@ -1,0 +1,13 @@
+*.pyc
+.coverage
+example/credentials.json
+
+*.egg-info/
+dist/
+.tox
+
+.python-version
+.idea/
+.venv/
+
+.dat
