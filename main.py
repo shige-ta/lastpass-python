@@ -16,25 +16,28 @@ with open(os.path.join(os.path.dirname(__file__), 'credentials.json')) as f:
     username = credentials['username']
     password = credentials['password']
 
+
+jsonstr = []
+
 try:
-    with open('backup.dat', 'rb') as fp:
-        vault = pickle.load(fp)
-    if vault == None:
-        # First try without a multifactor password
-        vault = Vault.open_remote(username, password, None)
+    with open('backup.json', 'r') as fp:
+        jsonstr = json.load(fp)
+
 except:
     # Get the code
     multifactor_password = input('Enter Google Authenticator code:')
-
-    # And now retry with the code
     vault = Vault.open_remote(username, password, multifactor_password)
 
-for index, i in enumerate(vault.accounts):
-    if i.notes.decode('utf-8') in '':
-        print('url:' + i.url.decode('utf-8'))
+    for index, i in enumerate(vault.accounts):
+        if i.notes.decode('utf-8') in '':
+            jsonstr.append({'username' : i.name.decode('utf-8')})
+            jsonstr.append({'url': i.url.decode('utf-8')})
+
+print(jsonstr)
+
+with open('backup.json', 'w') as f:
+    json.dump(jsonstr, f, ensure_ascii=False)
 
 
-# 書き込み
-with open('backup.dat', 'wb') as fp:
-    pickle.dump(vault, fp)
+
 

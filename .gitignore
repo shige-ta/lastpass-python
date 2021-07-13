@@ -1,12 +1,7 @@
 *.pyc
 .coverage
 credentials.json
-
-*.egg-info/
-dist/
-.tox
-
-.python-version
+backup.json
 .idea/
 .venv/
 
